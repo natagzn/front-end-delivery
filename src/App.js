@@ -8,6 +8,7 @@ import RegisterPage from './components/RegisterPage';
 import GoodsPage from './components/User/GoodsPage';
 import AdminGoodsPage from './components/Admin/AdminGoodsPage';
 import AdminOrderPage from './components/Admin/AdminOrderPage';
+import AdminDeliveryPage from "./components/Admin/AdminDeliveryPage";
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token');
@@ -62,6 +63,12 @@ function App() {
                     path="/admin/orders"
                     element={
                         <AdminOrderPage />
+                    }
+                />
+                <Route
+                    path="/admin/delivery"
+                    element={
+                        <AdminDeliveryPage />
                     }
                 />
             </Routes>

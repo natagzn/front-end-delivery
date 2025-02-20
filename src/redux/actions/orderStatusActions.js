@@ -6,7 +6,7 @@ export const UPDATE_STATUS_SUCCESS = 'UPDATE_STATUS_SUCCESS';
 export const DELETE_STATUS_SUCCESS = 'DELETE_STATUS_SUCCESS';
 export const ORDER_STATUS_ERROR = 'ORDER_STATUS_ERROR';
 
-const API_URL = "http://localhost:4000/status-order";  // Твій API для статусів
+const API_URL = "http://localhost:4000/status-order";
 
 // Отримуємо токен з localStorage
 const getToken = () => {
