@@ -1,9 +1,7 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {jwtDecode} from "jwt-decode";
-//import "./Navbar.css"; // Додай стилі при необхідності
-import "./index.css";
-
+import "./styles/navbar.css";
 
 const Navbar = () => {
     const token = localStorage.getItem("token");

@@ -1,0 +1,400 @@
+/* Базові стилі */
+body {
+    margin: 0;
+    font-family: 'Roboto', 'Segoe UI', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #f8f9fa;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* Навігаційна панель */
+.navbar {
+    background: #ffffff;
+    padding: 15px 20px;
+    box-shadow: 0 4px 12px rgba(230, 126, 34, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 3px solid #e67e22; /* м'якіший оранжевий */
+}
+
+/* Контейнер для списку */
+.navbar ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0;
+    margin: 0 0 0 20px; /* Додатковий відступ зліва для всього списку */
+    gap: 15px; /* Рівномірний відступ між елементами */
+}
+
+/* Стиль елементів списку */
+.navbar ul li {
+    position: relative;
+}
+
+/* Базовий стиль посилань */
+.navbar ul li a {
+    display: inline-block;
+    text-decoration: none;
+    color: #333333;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 12px 18px;
+    min-width: 140px;
+    text-align: center;
+    border-radius: 6px;
+    transition: all 0.25s ease;
+    background: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+}
+
+/* Ефект при наведенні */
+.navbar ul li a:hover {
+    color: #ffffff; /* Змінено на білий для кращого контрасту */
+    background: #f39c12; /* М'якіший оранжевий колір при наведенні */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Активний стан посилань */
+.navbar ul li .active {
+    color: #ffffff;
+    background: #e67e22; /* М'якіший оранжевий замість градієнта */
+    border-color: #d35400;
+    box-shadow: 0 4px 10px rgba(230, 126, 34, 0.2);
+}
+
+.navbar ul li .active:hover {
+    background: #d35400; /* Темніший відтінок при наведенні на активний елемент */
+    transform: translateY(-2px);
+}
+
+/* Кнопка виходу */
+.logout-btn {
+    background: #ffffff;
+    color: #e67e22; /* М'якіший оранжевий */
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px 18px;
+    min-width: 140px;
+    border: 1px solid #e67e22;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-left: auto; /* Зміщує кнопку вправо */
+}
+
+.logout-btn:hover {
+    background: #e67e22; /* М'якіший оранжевий замість градієнта */
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(230, 126, 34, 0.2);
+}
+
+/* Адаптивність */
+@media (max-width: 992px) {
+    .navbar ul {
+        gap: 10px;
+    }
+
+    .navbar ul li a,
+    .logout-btn {
+        min-width: 120px;
+        padding: 10px 14px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar ul {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 0;
+        margin-left: 0; /* Скидаємо лівий відступ для мобільної версії */
+    }
+
+    .navbar ul li {
+        margin: 5px 20px; /* Додаємо відступи зліва та справа для кожного елемента */
+    }
+
+    .navbar ul li a,
+    .logout-btn {
+        display: block;
+        width: 100%;
+        min-width: unset;
+        text-align: left;
+        padding: 12px 20px;
+    }
+
+    .logout-btn {
+        margin-top: 10px;
+        margin-left: 0;
+    }
+}
+
+/* Підкреслення для активного елемента (опціонально) */
+.navbar ul li .active::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #f39c12; /* М'якіший оранжевий */
+    border-radius: 3px;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.navbar ul li .active:hover::after {
+    transform: scaleX(1);
+}
+
+/* Анімація переходу між сторінками (опціонально) */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.navbar + main {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Мобільне меню */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px;
+    }
+
+    .logout-item {
+        margin-top: 15px;
+        border-top: 1px solid #e9ecef;
+        padding-top: 15px;
+    }
+}
+
+/* Додаткові стилі для сторінки */
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1, h2, h3 {
+    color: #d35400; /* Темніший і м'якіший оранжевий для заголовків */
+}
+
+/* Основний контейнер для сторінок */
+.page-container {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(230, 126, 34, 0.1);
+    margin-top: 20px;
+}
+
+/* Загальні стилі для кнопок (якщо потрібно) */
+.btn {
+    background: #e67e22; /* М'якіший оранжевий замість градієнта */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: #d35400; /* Темніший відтінок при наведенні */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(230, 126, 34, 0.2);
+}
+
+
+
+
+
+
+
+
+
+
+/* Стилі для таблиць (якщо потрібно) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+table th {
+    background-color: #fdebd0; /* Дуже світлий оранжевий для заголовків таблиці */
+    color: #333333;
+    font-weight: 600;
+}
+
+table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+table tr:hover {
+    background-color: rgba(230, 126, 34, 0.05); /* Легкий оранжевий при наведенні */
+}
+
+
+
+
+
+/* Основні стилі для кнопок */
+.btn {
+    background: #e67e22; /* М'якіший оранжевий як базовий колір */
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    display: inline-block;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    background: #d35400; /* Темніший відтінок при наведенні */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(230, 126, 34, 0.2);
+}
+
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(230, 126, 34, 0.3);
+}
+
+/* Кнопка другорядної дії */
+.btn-secondary {
+    background: #ffffff;
+    color: #e67e22;
+    border: 1px solid #e67e22;
+}
+
+.btn-secondary:hover {
+    background: #fef5e7; /* Дуже світлий оранжевий фон при наведенні */
+    color: #d35400;
+    border-color: #d35400;
+}
+
+/* Маленька кнопка */
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+/* Велика кнопка */
+.btn-lg {
+    padding: 14px 28px;
+    font-size: 18px;
+}
+
+/* Кнопка на всю ширину */
+.btn-block {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Кнопка з іконкою */
+.btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Кнопка з підсвіткою */
+.btn-highlight {
+    background: #f39c12; /* Світліший оранжевий для підсвітки */
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+}
+
+.btn-highlight:hover {
+    background: #e67e22;
+    box-shadow: 0 6px 14px rgba(243, 156, 18, 0.4);
+}
+
+/* Кнопка відключена */
+.btn-disabled, .btn:disabled {
+    background: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.7;
+}
+
+.btn-disabled:hover, .btn:disabled:hover {
+    background: #cccccc;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Кнопка для важливих дій */
+.btn-primary {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    border-bottom: 3px solid #d35400;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+}
+
+/* Кнопка для завершення процесу */
+.btn-success {
+    background: #27ae60;
+    border-bottom: 3px solid #219653;
+}
+
+.btn-success:hover {
+    background: #219653;
+}
+
+/* Адаптивність для кнопок */
+@media (max-width: 768px) {
+    .btn {
+        padding: 10px 20px;
+        font-size: 15px;
+    }
+
+    .btn-lg {
+        padding: 12px 24px;
+        font-size: 16px;
+    }
+
+    .btn-sm {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+}
+
+
+
+
+
+
+
+

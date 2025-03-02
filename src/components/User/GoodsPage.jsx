@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGoods } from "../../redux/actions/goodsAction";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,6 +8,7 @@ import {jwtDecode} from "jwt-decode";
 const GoodsUser = () => {
     const dispatch = useDispatch();
     const { goods } = useSelector((state) => state.goods);
+    const [message, setMessage] = useState(""); // Додаємо стан для повідомлення
 
     const token = localStorage.getItem("token");
     const userId = jwtDecode(token)?.sub || null;
@@ -23,17 +24,34 @@ const GoodsUser = () => {
             console.error("User ID is missing. Cannot create an order.");
             return;
         }
+
         const orderData = {
-            user_id: userId, // Поле має називатися саме user_id
-            goods_id: goodsID // Поле має називатися саме goods_id
+            user_id: userId,
+            goods_id: goodsID
         };
+
         console.log("Creating order with data:", orderData);
-        dispatch(addOrder(orderData));
+
+        dispatch(addOrder(orderData))
+            .then(() => {
+                dispatch(fetchGoods()); // Оновлюємо список товарів
+                setMessage("Замовлення успішно створено! ✅"); // Встановлюємо повідомлення
+                setTimeout(() => setMessage(""), 3000); // Прибираємо через 3 секунди
+            })
+            .catch((error) => {
+                console.error("Помилка створення замовлення:", error);
+                setMessage("Помилка створення замовлення ❌");
+                setTimeout(() => setMessage(""), 3000);
+            });
     };
 
     return (
         <div className="container">
             <h2 className="text-center my-4">Товари</h2>
+
+            {/* Блок для повідомлення */}
+            {message && <div className="alert alert-success text-center">{message}</div>}
+
             <div className="row">
                 {goods.length > 0 ? (
                     goods.map((item) => (

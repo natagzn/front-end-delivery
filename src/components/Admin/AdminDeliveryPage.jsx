@@ -7,6 +7,9 @@ import { fetchStatuses } from "../../redux/actions/deliveryStatusActions";
 const AdminDeliveryPage = () => {
     const dispatch = useDispatch();
     const [selectedStatus, setSelectedStatus] = useState({});
+    const [searchQuery, setSearchQuery] = useState('');
+    const [sortBy, setSortBy] = useState(null);
+    const [sortOrder, setSortOrder] = useState('asc');
 
     const deliveries = useSelector((state) => state.delivery.deliveries || []);
     const loading = useSelector((state) => state.delivery.loading);
@@ -14,15 +17,11 @@ const AdminDeliveryPage = () => {
 
     const statusesState = useSelector((state) => state.deliveryStatus) ?? {};
     const { statuses = [] } = statusesState;
-    console.log("statussState", statuses);
-
-    let load = true;
 
     useEffect(() => {
         dispatch(fetchDeliveries());
         dispatch(fetchStatuses());
     }, [dispatch]);
-
 
     useEffect(() => {
         if (deliveries.length) {
@@ -57,29 +56,61 @@ const AdminDeliveryPage = () => {
         }
     };
 
+    const handleSearch = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const handleSort = (field) => {
+        const order = sortBy === field && sortOrder === 'asc' ? 'desc' : 'asc';
+        setSortBy(field);
+        setSortOrder(order);
+    };
+
+    const filteredDeliveries = deliveries.filter(delivery =>
+        delivery._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        delivery.order_id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        delivery.status.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const sortedDeliveries = [...filteredDeliveries].sort((a, b) => {
+        if (!sortBy) return 0;
+        const aValue = a[sortBy];
+        const bValue = b[sortBy];
+        if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+        if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+        return 0;
+    });
+
     return (
         <div className="container">
             <h2>🚚 Доставка</h2>
-
-            {deliveries.length === 0 ? (
+            <input
+                type="text"
+                placeholder="Пошук за ID або статусом"
+                value={searchQuery}
+                onChange={handleSearch}
+                className="search-input"
+            />
+            {filteredDeliveries.length === 0 ? (
                 <p className="text-gray-500 text-center">❌ Немає перевезень</p>
             ) : (
                 <div className="overflow-x-auto">
-                    <table className="bg-white shadow-md rounded-lg">
+                    <table className="min-w-full bg-white shadow-md rounded-lg">
                         <thead>
-                        <tr className="bg-blue-600 text-white">
-                            <th className="py-3 px-4 border-b">ID</th>
-                            <th className="py-3 px-4 border-b">ID Замовлення</th>
-                            <th className="py-3 px-4 border-b">Статус</th>
-                            <th className="py-3 px-4 border-b">Дата</th>
-                            <th className="py-3 px-4 border-b">Останнє оновлення</th>
+                        <tr>
+                            <th onClick={() => handleSort('_id')}>ID доставки ⬍</th>
+                            <th onClick={() => handleSort('order_id')}>ID замовлення ⬍</th>
+                            <th>Статус</th>
+                            <th onClick={() => handleSort('created_at')}>Створено ⬍</th>
+                            <th onClick={() => handleSort('departure_date')}>Оновлено ⬍</th>
+                            <th>Дії</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {deliveries.map((delivery) => (
+                        {sortedDeliveries.map((delivery) => (
                             <tr key={delivery._id} className="border-b hover:bg-gray-50">
-                                <td className="py-3 px-4">{delivery._id}</td>
-                                <td className="py-3 px-4">{delivery.order_id}</td>
+                                <td>{delivery._id}</td>
+                                <td>{delivery.order_id}</td>
                                 <td>
                                     <select
                                         className="py-1 px-2 border rounded"
@@ -93,15 +124,14 @@ const AdminDeliveryPage = () => {
                                         ))}
                                     </select>
                                 </td>
-                                <td className="py-3 px-4">{new Date(delivery.created_at).toLocaleString()}</td>
-                                <td className="py-3 px-4">{new Date(delivery.departure_date).toLocaleString()}</td>
-                                <td className="py-3 px-4 text-center">
+                                <td>{new Date(delivery.created_at).toLocaleDateString()}</td>
+                                <td>{new Date(delivery.departure_date).toLocaleDateString()}</td>
+                                <td className="text-center">
                                     <button
-                                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-                                        style={{ backgroundColor: "#966FD6", color: "#fff" }}
+                                        className="btn btn-primary"
                                         onClick={() => handleEdit(delivery._id)}
                                     >
-                                        Зберегти зміни
+                                        Зберегти
                                     </button>
                                 </td>
                             </tr>

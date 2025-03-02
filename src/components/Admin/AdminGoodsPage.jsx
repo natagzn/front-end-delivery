@@ -47,7 +47,10 @@ const GoodsUser = () => {
     return (
         <div className="container">
             <h2 className="text-center my-4">Товари</h2>
-            <button className="btn btn-success mb-3" onClick={handleCreate}>Створити товар</button>
+            <button
+                className="btn btn-success mb-3 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                style={{ backgroundColor: "#e67e22", color: "#fff" }}
+                onClick={handleCreate}>Створити товар</button>
             <div className="row">
                 {goods.length > 0 ? (
                     goods.map((item) => (

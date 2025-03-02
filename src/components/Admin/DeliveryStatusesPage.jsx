@@ -52,7 +52,10 @@ const DeliveryStatusPage = () => {
     return (
         <div className="container">
             <h2 className="text-center my-4">Статуси доставки</h2>
-            <button className="btn btn-success mb-3" onClick={handleCreate}>Створити статус</button>
+            <button
+                className="btn btn-success mb-3 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                style={{ backgroundColor: "#e67e22", color: "#fff" }}
+                onClick={handleCreate}>Створити статус</button>
             <div className="row">
                 {statuses && statuses.length > 0 ? (
                     statuses.map((item) => (

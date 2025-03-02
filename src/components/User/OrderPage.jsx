@@ -27,7 +27,7 @@ const OrdersUser = () => {
         return {
             ...order,
             deliveryStatus: delivery ? delivery.status : "Не відомо",
-            deliveryStatusDate: delivery ? delivery.departure_date : "Не відомо"
+            deliveryStatusDate: delivery ? (delivery.departure_date ? delivery.departure_date  : "Не відомо" )  : "Не відомо"
         };
     }).filter(order => order.user_id === userId);
 
@@ -43,7 +43,7 @@ const OrdersUser = () => {
                                     <h5 className="card-title">Товар: {order.goodsName}</h5>
                                     <p className="card-text">Статус замовлення: {order.status}</p>
                                     <p className="card-text">Статус доставки: {order.deliveryStatus}</p>
-                                    <p className="card-text">Дата оновлення: {new Date(order.deliveryStatusDate).toLocaleString()}</p>
+                                    <p className="card-text">Дата оновлення: {order.deliveryStatusDate == "Не відомо"? "Не відомо" : new Date(order.deliveryStatusDate).toLocaleString() }</p>
                                     <p className="card-text">Дата створення: {new Date(order.created_at).toLocaleString()}</p>
                                 </div>
                             </div>

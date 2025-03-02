@@ -13,14 +13,13 @@ const API_URL = 'http://localhost:4000/auth';
 // Register Action
 export const register = (userData) => async (dispatch) => {
   try {
-    const response = await axios.post(`${API_URL}/create`, userData);
+    const response = await axios.post(`http://localhost:4000/user/create`, userData);
     dispatch({ type: REGISTER_SUCCESS, payload: response.data });
   } catch (error) {
     dispatch({ type: REGISTER_FAIL, payload: error.response?.data?.message || 'Registration failed' });
   }
 };
 
-// Login Action
 export const login = (email, password) => async (dispatch) => {
   try {
     const response = await axios.post(`${API_URL}/login`, { email, password });
@@ -33,7 +32,6 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-// Logout Action
 export const logout = () => (dispatch) => {
   localStorage.removeItem('token');
   dispatch({ type: LOGOUT });
