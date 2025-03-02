@@ -16,6 +16,8 @@ const getToken = () => {
 export const fetchOrders = () => async (dispatch) => {
     try {
         const token = getToken();
+        console.log("token - ", token);
+
         console.log("🔄 Отримання всіх замовлень...");
 
         // Отримуємо список замовлень

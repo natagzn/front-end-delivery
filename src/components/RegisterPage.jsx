@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../redux/actions/authActions';
-
+/*
 const RegisterPage = () => {
   const dispatch = useDispatch();
 
@@ -344,4 +344,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default RegisterPage;*/

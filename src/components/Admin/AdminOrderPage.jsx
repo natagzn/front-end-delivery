@@ -62,7 +62,7 @@ const AdminOrderPage = () => {
             <h2 className="text-2xl font-bold text-gray-800 mb-4">📦 Список замовлень</h2>
 
             {orders.length === 0 ? (
-                <p className="text-gray-500">❌ Немає замовлень</p>
+                <p className="text-gray-500">❌ Немає замовлень.</p>
             ) : (
                 <div className="overflow-x-auto">
                     <table className="min-w-full bg-white shadow-md rounded-lg">

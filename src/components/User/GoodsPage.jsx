@@ -2,18 +2,33 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGoods } from "../../redux/actions/goodsAction";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {addOrder} from "../../redux/actions/orderActions";
+import {jwtDecode} from "jwt-decode";
 
 const GoodsUser = () => {
     const dispatch = useDispatch();
     const { goods } = useSelector((state) => state.goods);
 
+    const token = localStorage.getItem("token");
+    const userId = jwtDecode(token)?.sub || null;
+
+
     useEffect(() => {
         dispatch(fetchGoods());
     }, [dispatch]);
 
+
     const handleOrder = (goodsID) => {
-        console.log(`Замовлення товару з ID: ${goodsID}`);
-        // TODO: Реалізувати логіку створення замовлення
+        if (!userId) {
+            console.error("User ID is missing. Cannot create an order.");
+            return;
+        }
+        const orderData = {
+            user_id: userId, // Поле має називатися саме user_id
+            goods_id: goodsID // Поле має називатися саме goods_id
+        };
+        console.log("Creating order with data:", orderData);
+        dispatch(addOrder(orderData));
     };
 
     return (

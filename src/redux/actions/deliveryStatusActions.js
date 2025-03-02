@@ -18,15 +18,16 @@ const getToken = () => {
 export const addStatusDelivery = (statusData) => async (dispatch) => {
     try {
         const token = getToken();
+        console.log("token - ", token);
         const response = await axios.post(`${API_URL}/create`, statusData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             }
         });
-        dispatch({ type: ADD_STATUS_SUCCESS, payload: response.data.StatusOrder });
+        dispatch({ type: ADD_STATUS_SUCCESS, payload: response.data });
     } catch (error) {
-        console.error("Error adding status order:", error);
+        console.error("Error adding status delivery:", error);
         dispatch({ type: ORDER_STATUS_ERROR, payload: error.message });
     }
 };
@@ -42,16 +43,16 @@ export const fetchStatuses = () => async (dispatch) => {
         });
         dispatch({ type: FETCH_STATUSES_SUCCESS, payload: response.data });
     } catch (error) {
-        console.error("Error fetching status orders:", error);
+        console.error("Error fetching status delivery:", error);
         dispatch({ type: ORDER_STATUS_ERROR, payload: error.message });
     }
 };
 
 // Дія для оновлення статусу замовлення
-export const updateStatusOrder = (statusOrderID, statusData) => async (dispatch) => {
+export const updateStatusDelivery = (statusDeliveryID, statusData) => async (dispatch) => {
     try {
         const token = getToken();
-        const response = await axios.put(`${API_URL}/update?statusOrderID=${statusOrderID}`, statusData, {
+        const response = await axios.put(`${API_URL}/update?statusDeliveryID=${statusDeliveryID}`, statusData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -59,21 +60,21 @@ export const updateStatusOrder = (statusOrderID, statusData) => async (dispatch)
         });
         dispatch({ type: UPDATE_STATUS_SUCCESS, payload: response.data.statusOrder });
     } catch (error) {
-        console.error("Error updating status order:", error);
+        console.error("Error updating status delivery:", error);
         dispatch({ type: ORDER_STATUS_ERROR, payload: error.message });
     }
 };
 
 // Дія для видалення статусу замовлення
-export const deleteStatusOrder = (statusOrderID) => async (dispatch) => {
+export const deleteStatusDelivery = (statusDeliveryID) => async (dispatch) => {
     try {
         const token = getToken();
-        await axios.delete(`${API_URL}/delete?statusOrderID=${statusOrderID}`, {
+        await axios.delete(`${API_URL}/delete?statusDeliveryID=${statusDeliveryID}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
         });
-        dispatch({ type: DELETE_STATUS_SUCCESS, payload: statusOrderID });
+        dispatch({ type: DELETE_STATUS_SUCCESS, payload: statusDeliveryID });
     } catch (error) {
         console.error("Error deleting status order:", error);
         dispatch({ type: ORDER_STATUS_ERROR, payload: error.message });

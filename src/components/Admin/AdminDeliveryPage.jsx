@@ -14,11 +14,15 @@ const AdminDeliveryPage = () => {
 
     const statusesState = useSelector((state) => state.deliveryStatus) ?? {};
     const { statuses = [] } = statusesState;
+    console.log("statussState", statuses);
+
+    let load = true;
 
     useEffect(() => {
         dispatch(fetchDeliveries());
         dispatch(fetchStatuses());
     }, [dispatch]);
+
 
     useEffect(() => {
         if (deliveries.length) {

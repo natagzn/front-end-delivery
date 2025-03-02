@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStatuses, addStatusDelivery, updateStatusDelivery, deleteStatusDelivery } from "../../redux/actions/deliveryStatusActions";
+import { fetchStatuses, addStatusOrder, updateStatusOrder, deleteStatusOrder } from "../../redux/actions/orderStatusActions";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const DeliveryStatusPage = () => {
+const OrderStatusPage = () => {
     const dispatch = useDispatch();
-    const { statuses } = useSelector((state) => state.deliveryStatus);
+    const { statuses } = useSelector((state) => state.orderStatus);
 
     const [showModal, setShowModal] = useState(false);
     const [currentStatus, setCurrentStatus] = useState(null);
@@ -17,15 +17,15 @@ const DeliveryStatusPage = () => {
 
     const handleDelete = (id) => {
         if (window.confirm("Ви впевнені, що хочете видалити цей статус?")) {
-            dispatch(deleteStatusDelivery(id)).then(() => {
-                dispatch(fetchStatuses()); // Оновлення списку після видалення
+            dispatch(deleteStatusOrder(id)).then(() => {
+                dispatch(fetchStatuses());
             });
         }
     };
 
     const handleEdit = (status) => {
         setCurrentStatus(status);
-        setFormData({ name: status.name});
+        setFormData({ name: status.name });
         setShowModal(true);
     };
 
@@ -38,12 +38,12 @@ const DeliveryStatusPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (currentStatus) {
-            dispatch(updateStatusDelivery(currentStatus._id, formData)).then(() => {
-                dispatch(fetchStatuses()); // Оновлення списку після видалення
+            dispatch(updateStatusOrder(currentStatus._id, formData)).then(() => {
+                dispatch(fetchStatuses());
             });
         } else {
-            dispatch(addStatusDelivery(formData)).then(() => {
-                dispatch(fetchStatuses()); // Оновлення списку після видалення
+            dispatch(addStatusOrder(formData)).then(() => {
+                dispatch(fetchStatuses());
             });
         }
         setShowModal(false);
@@ -51,7 +51,7 @@ const DeliveryStatusPage = () => {
 
     return (
         <div className="container">
-            <h2 className="text-center my-4">Статуси доставки</h2>
+            <h2 className="text-center my-4">Статуси замовлень</h2>
             <button className="btn btn-success mb-3" onClick={handleCreate}>Створити статус</button>
             <div className="row">
                 {statuses && statuses.length > 0 ? (
@@ -60,7 +60,6 @@ const DeliveryStatusPage = () => {
                             <div className="card shadow-sm">
                                 <div className="card-body">
                                     <h5 className="card-title">{item.name}</h5>
-                                    <p className="card-text">{item.description}</p>
                                     <button className="btn btn-warning me-2" onClick={() => handleEdit(item)}>Змінити</button>
                                     <button className="btn btn-danger" onClick={() => handleDelete(item._id)}>Видалити</button>
                                 </div>
@@ -98,4 +97,4 @@ const DeliveryStatusPage = () => {
     );
 };
 
-export default DeliveryStatusPage;
+export default OrderStatusPage;

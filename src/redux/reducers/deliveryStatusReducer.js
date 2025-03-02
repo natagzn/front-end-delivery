@@ -23,13 +23,13 @@ const deliveryStatusReducer = (state = initialState, action) => {
         case ADD_STATUS_SUCCESS:
             return {
                 ...state,
-                statuses: [...state.orderStatus, action.payload], // Додаємо новий статус до списку
+                statuses: [...state.deliveryStatus, action.payload],
                 loading: false,
             };
         case UPDATE_STATUS_SUCCESS:
             return {
                 ...state,
-                statuses: state.orderStatus.map(status =>
+                statuses: state.deliveryStatus.map(status =>
                     status._id === action.payload._id ? { ...status, ...action.payload } : status
                 ), // Оновлюємо статус у списку
                 loading: false,
@@ -37,7 +37,7 @@ const deliveryStatusReducer = (state = initialState, action) => {
         case DELETE_STATUS_SUCCESS:
             return {
                 ...state,
-                statuses: state.orderStatus.filter(status => status._id !== action.payload), // Видаляємо статус зі списку
+                statuses: state.deliveryStatus.filter(status => status._id !== action.payload), // Видаляємо статус зі списку
                 loading: false,
             };
         case ORDER_STATUS_ERROR:

@@ -9,7 +9,6 @@ export const GOODS_ERROR = 'GOODS_ERROR';
 
 const API_URL = "http://localhost:4000/goods";
 
-// Функція отримання токена (замініть на реальну реалізацію)
 //const getToken = (getState) => getState().auth.token;
 const getToken = () => {
     const token = localStorage.getItem("token");
